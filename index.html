@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DUMB — desserts &amp; coffee, Surat</title>
+  <meta name="description" content="Your local cookie dealer. Home of the viral molten cookie. Coffee, shakes, cookies, matcha & desserts in Surat — 2pm to midnight, every day." />
+  <meta name="theme-color" content="#D9262E" />
+  <meta property="og:title" content="DUMB — desserts & coffee" />
+  <meta property="og:description" content="life's short, make dumb decisions. the viral molten cookie, 6pm onwards." />
+  <meta property="og:image" content="assets/ig/p03.jpg" />
+  <link rel="icon" href="assets/ig/logo.jpg" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Serif+Display:ital@0;1&family=Gochi+Hand&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+
+  <script type="importmap">
+    { "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+    } }
+  </script>
+</head>
+<body>
+
+  <!-- ====== loader ====== -->
+  <div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__hud mono">
+      <span class="loader__rec"><i></i>REC</span>
+      <span id="loaderTime">00:00:00</span>
+    </div>
+    <div class="loader__inner">
+      <div class="loader__stack" id="loaderStack"></div>
+      <p class="loader__word bubble" id="loaderWord">&nbsp;</p>
+      <div class="loader__bar"><span id="loaderBar"></span></div>
+      <p class="loader__sub mono"><span class="hand">DUMB is loading. please stand by 😶‍🌫️</span><b id="loaderPct">000%</b></p>
+    </div>
+    <div class="loader__hud loader__hud--bottom mono">
+      <span>@getdumbbbb</span>
+      <span id="loaderCount">00/12</span>
+    </div>
+  </div>
+
+  <div class="cursor" id="cursor" aria-hidden="true"><span>🍪</span></div>
+  <div class="toast hand" id="toast" role="status" aria-live="polite"></div>
+
+  <!-- ====== nav ====== -->
+  <header class="nav" id="nav">
+    <a href="#top" class="nav__brand" aria-label="Dumb Desserts home">
+      <img src="assets/ig/logo.jpg" alt="" width="44" height="44" />
+      <span class="bubble">DUMB</span>
+    </a>
+    <nav class="nav__links" aria-label="Main">
+      <a href="#molten">the cookie</a>
+      <a href="#menu">menu</a>
+      <a href="#spot">the spot</a>
+      <a href="#visit">visit</a>
+    </nav>
+    <div class="nav__status mono" id="status"><i></i><span>checking…</span></div>
+    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <a href="#molten">the cookie</a>
+    <a href="#menu">menu</a>
+    <a href="#spot">the spot</a>
+    <a href="#gram">the gram</a>
+    <a href="#visit">visit us</a>
+    <p class="hand">open 2pm – 12am · every day</p>
+  </div>
+
+  <main id="top">
+
+    <!-- ====== hero ====== -->
+    <section class="hero tiles" id="hero">
+      <div class="hero__copy">
+        <p class="sticker sticker--cream hand" data-float>📍 surat · est. oct '26</p>
+        <p class="hero__kicker hand reveal-up">your local cookie dealer 🍪</p>
+        <h1 class="hero__title">
+          <span class="bubble hero__dumb" aria-label="DUMB">
+            <span>D</span><span>U</span><span>M</span><span>B</span>
+          </span>
+          <span class="hero__sub">desserts <em>&amp;</em> coffee</span>
+        </h1>
+        <p class="hero__lede reveal-up">freshly baked cookies and other dumb happy things. served 2pm to midnight, because good decisions are honestly overrated.</p>
+        <div class="hero__ctas reveal-up">
+          <a href="#menu" class="btn btn--cream">see the menu</a>
+          <button class="btn btn--ghost" data-decide>make a dumb decision 🎲</button>
+        </div>
+      </div>
+
+      <div class="hero__stage">
+        <button class="hero__pile" id="heroPile" aria-label="Shuffle the photos">
+          <div class="hslot" style="--x:-16%; --y:6%; --r:-11deg"><figure class="hcard"><img src="assets/ig/p07.jpg" alt="Someone biting into a DUMB cookie" /><figcaption class="hand">"this was the last time" (it wasn't)</figcaption></figure></div>
+          <div class="hslot" style="--x:17%; --y:3%; --r:9deg"><figure class="hcard"><span class="tape"></span><img src="assets/ig/p05.jpg" alt="Scoopable chocolate chip cookie dough" /><figcaption class="hand">the scoopable one</figcaption></figure></div>
+          <div class="hslot" style="--x:-5%; --y:-4%; --r:-4deg"><figure class="hcard"><img src="assets/ig/p04.jpg" alt="Molten cookie split open over gelato" /><figcaption class="hand">molten little situation</figcaption></figure></div>
+          <div class="hslot" style="--x:3%; --y:-1%; --r:3deg"><figure class="hcard"><span class="tape"></span><img src="assets/ig/p01.jpg" alt="The viral molten cookie with gelato in a DUMB box" /><figcaption class="hand">the viral molten cookie 🍪</figcaption></figure></div>
+        </button>
+
+        <svg class="spin-badge" viewBox="0 0 200 200" aria-hidden="true">
+          <defs><path id="badgeCircle" d="M100,100 m-74,0 a74,74 0 1,1 148,0 a74,74 0 1,1 -148,0" /></defs>
+          <circle cx="100" cy="100" r="96" class="spin-badge__bg" />
+          <g class="spin-badge__ring"><text><textPath href="#badgeCircle">the viral molten cookie ✦ 6pm onwards ✦ limited af ✦</textPath></text></g>
+          <text x="100" y="114" text-anchor="middle" class="spin-badge__mid">🍪</text>
+        </svg>
+
+        <svg class="scribble scribble--hero" viewBox="0 0 220 120" aria-hidden="true"><path d="M8 20 C 70 0, 150 10, 170 60 S 160 105, 140 110" /><path d="M128 98 L140 111 L152 96" /></svg>
+        <p class="hero__note hand">this is the cookie place<br/>i was telling you about<br/><small>(the queue is worth it)</small></p>
+        <p class="hero__hint mono">tap the pile to shuffle</p>
+        <span class="sticker sticker--round" data-float style="--r:-12deg">certified<br/><b>DUMB</b></span>
+      </div>
+
+      <a href="#molten" class="hero__scroll mono" aria-label="scroll down">scroll if u dare ↓</a>
+    </section>
+
+    <!-- ====== ticker ====== -->
+    <div class="ticker" aria-hidden="true">
+      <div class="ticker__track" id="ticker">
+        <span>life's short, make dumb decisions</span><b>✦</b><span>coffee</span><b>✦</b><span>shakes</span><b>✦</b><span>cookie</span><b>✦</b><span>matcha</span><b>✦</b><span>dessert</span><b>✦</b><span>bad decisions taste better</span><b>✦</b>
+      </div>
+    </div>
+
+    <!-- ====== molten ====== -->
+    <section class="molten" id="molten">
+      <div class="molten__head">
+        <p class="mono label">// the main character</p>
+        <h2 class="split">trendy <span class="bubble">MOLTEN</span> little situation</h2>
+        <p class="molten__lede">dark cocoa outside. lava inside. cold gelato underneath. it dropped on 29.10 and surat said "say less". 1.8k likes later, here we are.</p>
+      </div>
+
+      <div class="molten__grid">
+        <figure class="anatomy">
+          <div class="polaroid polaroid--big" style="--r:-3deg">
+            <span class="tape"></span>
+            <img src="assets/ig/p03.jpg" alt="The viral molten cookie sitting on vanilla gelato in a red DUMB cup" loading="lazy" />
+            <figcaption class="hand">day 1 of the drop. it never stood a chance.</figcaption>
+          </div>
+          <ul class="anatomy__notes hand">
+            <li style="--y:16%" data-side="r"><svg viewBox="0 0 120 30"><path d="M118 15 C 80 2, 40 28, 4 14"/></svg>dark cocoa shell, crackly af</li>
+            <li style="--y:36%" data-side="l"><svg viewBox="0 0 120 30"><path d="M2 15 C 40 2, 80 28, 116 14"/></svg>molten choc core (the whole point)</li>
+            <li style="--y:58%" data-side="r"><svg viewBox="0 0 120 30"><path d="M118 15 C 80 28, 40 2, 4 14"/></svg>vanilla gelato for balance</li>
+            <li style="--y:72%" data-side="l"><svg viewBox="0 0 120 30"><path d="M2 15 C 40 28, 80 2, 116 14"/></svg>biscoff crumb floor</li>
+            <li style="--y:88%" data-side="r"><svg viewBox="0 0 120 30"><path d="M118 15 C 80 2, 40 28, 4 14"/></svg>the cup. keep it. it's cute.</li>
+          </ul>
+        </figure>
+
+        <div class="molten__info">
+          <div class="drop-card">
+            <p class="mono label">molten o'clock</p>
+            <p class="drop-card__state" id="dropState">loading the vibes…</p>
+            <div class="countdown mono" id="countdown" aria-live="polite">
+              <div><b data-h>00</b><span>hrs</span></div>
+              <div><b data-m>00</b><span>min</span></div>
+              <div><b data-s>00</b><span>sec</span></div>
+            </div>
+            <p class="hand drop-card__foot">available 6pm onwards. limited slots, limited cookies. once they're gone they're gone (and they go fast).</p>
+          </div>
+
+          <div class="stats">
+            <div class="stat"><b data-count="1892">0</b><span>likes on drop day</span></div>
+            <div class="stat"><b data-count="6">0</b><span>pm. that's when it starts</span></div>
+            <div class="stat"><b>∞</b><span>regrets (zero, actually)</span></div>
+          </div>
+
+          <div class="scoop">
+            <img src="assets/ig/p05.jpg" alt="Scoopable chocolate chip cookie dough being scooped" loading="lazy" />
+            <div>
+              <p class="mono label">also lowkey viral</p>
+              <h3>the scoopable cookie</h3>
+              <p>gooey cookie dough skillet, warm, eaten with a spoon like a feral person. no judgement here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== menu ====== -->
+    <section class="menu tiles tiles--soft" id="menu">
+      <div class="menu__head">
+        <p class="mono label label--cream">// order up</p>
+        <h2 class="split">pick your <span class="bubble">poison</span></h2>
+        <p class="hand menu__aside">(it's all cookies. the poison is cookies.)</p>
+      </div>
+
+      <div class="check" id="check">
+        <div class="check__top">
+          <h3 class="check__title">Guest Check <img src="assets/ig/logo.jpg" alt="" /></h3>
+          <div class="check__meta mono">
+            <span>Date<b id="checkDate">--</b></span>
+            <span>Table<b>dumb</b></span>
+            <span>Guests<b>u + bestie</b></span>
+            <span>Check No.<b class="red">037594</b></span>
+          </div>
+        </div>
+        <div class="check__tabs mono" role="tablist" id="tabs"></div>
+        <ul class="check__items" id="items" role="tabpanel"></ul>
+        <div class="check__bottom">
+          <p class="hand">bad decisions taste better ♡</p>
+          <p class="mono small">prices in ₹ · ask us about today's specials · menu changes when we feel like it</p>
+          <p class="check__thanks">Thank you. Please come again.</p>
+        </div>
+      </div>
+
+      <div class="decide" id="decide">
+        <div class="decide__copy">
+          <h3 class="bubble">can't decide?</h3>
+          <p class="hand">let the cookie gods choose. no refunds on destiny.</p>
+        </div>
+        <div class="slot" aria-live="polite">
+          <div class="slot__window"><ul class="slot__reel" id="reel"><li>press the button</li></ul></div>
+          <button class="btn btn--red" data-decide>spin it 🎰</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== the spot ====== -->
+    <section class="spot" id="spot">
+      <div class="spot__pin">
+        <div class="spot__intro">
+          <p class="mono label">// the spot</p>
+          <h2 class="split">red tiles, <br/>bad <span class="bubble">ideas</span></h2>
+          <p>we built a whole tiny red world for you to sit in, take 47 photos in, and eat cookies in. swipe the tour →</p>
+          <p class="hand">(the asmr dumb tour is on our gram btw)</p>
+        </div>
+        <div class="spot__track" id="spotTrack">
+          <article class="pcard" style="--r:-4deg"><span class="tape"></span><img src="assets/ig/p08.jpg" alt="Red metal stools against a red and white striped counter" loading="lazy" /><p class="hand">red stools. sit, spin, regret nothing.</p></article>
+          <article class="pcard" style="--r:3deg"><span class="tape"></span><img src="assets/ig/p09.jpg" alt="Round convex mirror on the red tiled wall reflecting the street" loading="lazy" /><p class="hand">the mirror. everyone takes this pic. you will too.</p></article>
+          <article class="pcard" style="--r:-2deg"><span class="tape"></span><img src="assets/ig/p06.jpg" alt="Red tiled wall with a giant guest check and the words this is the cookie place I was telling you about" loading="lazy" /><p class="hand">"this is the cookie place i was telling you about"</p></article>
+          <article class="pcard" style="--r:5deg"><span class="tape"></span><img src="assets/ig/p12.jpg" alt="Architectural sketch of the DUMB storefront" loading="lazy" /><p class="hand">the vision visioned ⭐</p></article>
+          <article class="pcard" style="--r:-5deg"><span class="tape"></span><img src="assets/ig/p11.jpg" alt="Store under construction with red ceiling being painted" loading="lazy" /><p class="hand">DUMB was loading. please stand by.</p></article>
+          <article class="pcard" style="--r:2deg"><span class="tape"></span><img src="assets/ig/p02.jpg" alt="Crowd of people outside DUMB at night on opening week" loading="lazy" /><p class="hand">surat, you literally ate!!! 🍪</p></article>
+          <article class="pcard pcard--end"><p class="bubble">come see it irl</p><a href="#visit" class="btn btn--red">take me there</a></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== disco ====== -->
+    <section class="disco" id="disco">
+      <div class="disco__room" aria-hidden="true">
+        <div class="disco__floor"></div>
+      </div>
+      <canvas id="discoCanvas" aria-hidden="true"></canvas>
+      <div class="disco__copy">
+        <p class="sign hand">Let's<br/>Get<br/>DUMB</p>
+        <p class="disco__lede">open till midnight, every single night. bring the group chat, bring the situationship, bring your mom. we don't judge (we do a little).</p>
+      </div>
+    </section>
+
+    <!-- ====== gram ====== -->
+    <section class="gram" id="gram">
+      <div class="gram__head">
+        <p class="mono label">// straight from the gram</p>
+        <h2 class="split">we post <span class="bubble">cookies</span> and chaos</h2>
+        <a class="btn btn--red" href="https://www.instagram.com/getdumbbbb/" target="_blank" rel="noopener">@getdumbbbb ↗</a>
+      </div>
+      <div class="gram__grid" id="gramGrid"></div>
+    </section>
+
+    <!-- ====== visit ====== -->
+    <section class="visit tiles" id="visit">
+      <div class="visit__card">
+        <p class="mono label">// pull up</p>
+        <h2 class="bubble">come get<br/>dumb</h2>
+        <dl class="visit__list">
+          <div><dt class="mono">when</dt><dd>every day · 2:00pm – 12:00am</dd></div>
+          <div><dt class="mono">molten</dt><dd>6pm onwards, till they run out (they will)</dd></div>
+          <div><dt class="mono">where</dt><dd>Surat, Gujarat. look for the red tiles &amp; the giant round mirror. you literally can't miss it.</dd></div>
+          <div><dt class="mono">serving</dt><dd>coffee · shakes · cookie · matcha · dessert</dd></div>
+        </dl>
+        <div class="visit__ctas">
+          <a class="btn btn--red" href="https://www.google.com/maps/search/?api=1&query=Dumb+Desserts+Surat" target="_blank" rel="noopener">open in maps ↗</a>
+          <a class="btn btn--ink" href="https://www.instagram.com/getdumbbbb/" target="_blank" rel="noopener">dm us on insta</a>
+        </div>
+      </div>
+      <div class="visit__mirror" aria-hidden="true">
+        <div class="mirror"><img src="assets/ig/p09.jpg" alt="" loading="lazy" /></div>
+        <p class="hand">↑ this guy. find him.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ====== footer ====== -->
+  <footer class="foot">
+    <div class="foot__checker" aria-hidden="true"></div>
+    <div class="foot__top">
+      <p class="hand foot__quote">life's short,<br/>make dumb decisions.</p>
+      <div class="foot__links mono">
+        <a href="https://www.instagram.com/getdumbbbb/" target="_blank" rel="noopener">instagram</a>
+        <a href="#menu">menu</a>
+        <a href="#visit">find us</a>
+        <a href="#top">back to top ↑</a>
+      </div>
+    </div>
+    <p class="foot__giant bubble" aria-hidden="true">DUMB</p>
+    <div class="foot__base mono">
+      <span>© 2026 dumb desserts, surat</span>
+      <span>this site uses zero browser cookies. only real ones.</span>
+      <span class="hint">psst. type "dumb" on your keyboard</span>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+  <script type="module" src="js/scenes.js"></script>
+</body>
+</html>
