@@ -118,6 +118,90 @@
     } else spin();
   }));
 
+  /* ---------- pack a dumb box ---------- */
+  // how each cookie is drawn: [dough, chips, extra]
+  const looks = {
+    "Viral Molten Cookie": ["#2b1610", "#140804", "molten"],
+    "Classic Choc Chunk": ["#c98a4b", "#3b1d10"],
+    "Double Dark Cocoa": ["#3d2219", "#120604"],
+    "Biscoff Stuffed": ["#b8742f", "#6e3b14"],
+    "Red Velvet Cream Cheese": ["#a3202b", "#fff3e4"],
+    "Nutella Lava": ["#8a5a34", "#3a1c0e"],
+    "Matcha White Choc Cookie": ["#86a052", "#fff3e4"],
+  };
+  const boxable = [...D.menu.cookie, ...D.menu.matcha].filter((c) => looks[c.name]);
+  const BOX_MAX = 4;
+  const packed = [];
+  const picker = $("#picker"), boxSlots = $("#boxSlots"), dbox = $("#dbox");
+  const boxSay = $("#boxSay"), boxSend = $("#boxSend");
+  const sayings = ["is that for me?", "ooh good start", "halfway to happy", "one more. do it.", "box packed. bestie-approved ✨"];
+  const drawCookie = (c) => {
+    const [base, chip, extra] = looks[c.name];
+    return `<span class="ck${extra ? " ck--" + extra : ""}" style="--base:${base};--chip:${chip}"></span>`;
+  };
+  const shortName = (n) => n.replace(" Cookie", "").replace(" Cream Cheese", "");
+
+  picker.innerHTML = boxable.map((c, i) => `
+    <li><button class="pick" type="button" data-i="${i}" aria-label="add ${c.name}, ₹${c.price}">
+      ${drawCookie(c)}<span class="pick__name">${shortName(c.name)}</span><span class="pick__price">₹${c.price}</span>
+    </button></li>`).join("");
+
+  function renderBox(justAdded) {
+    boxSlots.innerHTML = Array.from({ length: BOX_MAX }, (_, i) => packed[i]
+      ? `<button class="slot-c is-full" type="button" data-i="${i}" aria-label="take out ${packed[i].name}">${drawCookie(packed[i])}</button>`
+      : `<span class="slot-c">+</span>`).join("");
+    const full = packed.length === BOX_MAX;
+    $("#boxCount").textContent = `${packed.length}/${BOX_MAX} cookies`;
+    $("#boxTotal").textContent = "₹" + packed.reduce((t, c) => t + c.price, 0);
+    boxSay.textContent = sayings[packed.length];
+    boxSend.disabled = !packed.length;
+    dbox.classList.toggle("is-full", full);
+    $$(".pick", picker).forEach((b) => (b.disabled = full));
+    if (justAdded != null && hasGsap && !reduced) {
+      gsap.from(boxSlots.children[justAdded].firstElementChild, { y: -180, x: 60, rotation: 240, scale: .4, duration: .7, ease: "bounce.out" });
+    }
+    if (full && justAdded != null) {
+      const r = dbox.getBoundingClientRect();
+      setTimeout(() => crumbs(r.left + r.width / 2, r.top + r.height / 2, 18), 350);
+      toast("box packed. go claim it 🍪");
+    }
+  }
+
+  picker.addEventListener("click", (e) => {
+    const b = e.target.closest(".pick");
+    if (!b || packed.length >= BOX_MAX) return;
+    packed.push(boxable[+b.dataset.i]);
+    renderBox(packed.length - 1);
+  });
+  boxSlots.addEventListener("click", (e) => {
+    const s = e.target.closest(".slot-c.is-full");
+    if (!s) return;
+    packed.splice(+s.dataset.i, 1);
+    renderBox();
+  });
+  $("#boxRandom").addEventListener("click", () => {
+    if (packed.length === BOX_MAX) packed.length = 0;
+    const start = packed.length;
+    while (packed.length < BOX_MAX) packed.push(boxable[Math.floor(Math.random() * boxable.length)]);
+    renderBox();
+    if (hasGsap && !reduced) {
+      [...boxSlots.children].slice(start).forEach((s, k) =>
+        gsap.from(s.firstElementChild, { y: -180, rotation: 240, scale: .4, duration: .7, delay: k * .12, ease: "bounce.out" }));
+    }
+    toast("the cookie gods have packed your box");
+  });
+  boxSend.addEventListener("click", async () => {
+    const counts = packed.reduce((m, c) => (m.set(c, (m.get(c) || 0) + 1), m), new Map());
+    const lines = [...counts].map(([c, n]) => `- ${n}x ${c.name} (₹${c.price * n})`);
+    const total = packed.reduce((t, c) => t + c.price, 0);
+    const msg = `hii DUMB! 🍪 i'd like a dumb box:\n${lines.join("\n")}\ntotal: ₹${total}\n(packed it on your website)`;
+    let copied = false;
+    try { await navigator.clipboard.writeText(msg); copied = true; } catch {}
+    toast(copied ? "order copied! paste it in the DM 📋" : "screenshot your box & send it to us 📸");
+    window.open("https://ig.me/m/getdumbbbb", "_blank", "noopener");
+  });
+  renderBox();
+
   /* ---------- gram ---------- */
   const k = (n) => n >= 1000 ? (n / 1000).toFixed(1).replace(".0", "") + "k" : n;
   $("#gramGrid").innerHTML = D.gram.map((p) => `
@@ -127,20 +211,38 @@
       <div class="gpost__meta"><p>${p.cap}</p></div>
     </a>`).join("");
 
-  /* ---------- nav / drawer ---------- */
+  /* ---------- top bar + bottom dock ---------- */
   const nav = $("#nav");
-  const burger = $("#burger");
-  const drawer = $("#drawer");
-  const setDrawer = (on) => {
-    burger.setAttribute("aria-expanded", on);
-    drawer.classList.toggle("is-open", on);
-    drawer.setAttribute("aria-hidden", !on);
-    document.body.style.overflow = on ? "hidden" : "";
-    if (on) nav.classList.remove("is-hidden");
-    if (window.__lenis) on ? window.__lenis.stop() : window.__lenis.start();
-  };
-  burger.addEventListener("click", () => setDrawer(burger.getAttribute("aria-expanded") !== "true"));
-  $$("a", drawer).forEach((a) => a.addEventListener("click", () => setDrawer(false)));
+  const dock = $("#dock");
+  const blob = $("#dockBlob");
+  const dockLinks = $$("a", dock);
+  function setDock(key) {
+    const a = dockLinks.find((l) => l.dataset.sec === key);
+    dockLinks.forEach((l) => l.classList.toggle("is-active", l === a));
+    // the cream blob slides under whichever plain link is active (the mascot button has its own look)
+    if (!a || a.classList.contains("dock__main")) return blob.classList.remove("is-on");
+    blob.style.width = a.offsetWidth + "px";
+    blob.style.transform = `translateX(${a.offsetLeft}px)`;
+    blob.classList.add("is-on");
+  }
+  window.__setDock = setDock;
+  setDock("hero");
+
+  /* ---------- the dumb gang talks ---------- */
+  const gangLines = [
+    "hii bestie 👋",
+    "we're the dumb gang",
+    "the cookies are hot rn",
+    "6pm = molten o'clock",
+    "ok stop poking us 😭",
+    "made with zero brain cells 🫠",
+  ];
+  let said = 0;
+  $$(".gang__m").forEach((m) => m.addEventListener("click", () => {
+    m.classList.remove("is-hop"); void m.offsetWidth; m.classList.add("is-hop");
+    $("#gangSay").textContent = gangLines[++said % gangLines.length];
+  }));
+  $$(".gang__m").forEach((m) => m.addEventListener("animationend", (e) => e.animationName === "hop" && m.classList.remove("is-hop")));
 
   /* ---------- cursor + crumbs ---------- */
   if (finePointer && !reduced) {
@@ -269,15 +371,17 @@
     start: 0, end: "max",
     onUpdate: (st) => {
       const y = st.scroll();
-      nav.classList.toggle("is-hidden", y > lastY && y > 300 && !drawer.classList.contains("is-open"));
+      nav.classList.toggle("is-hidden", y > lastY && y > 300);
       lastY = y;
     },
   });
-  $$(".nav__links a").forEach((a) => {
-    const sec = document.querySelector(a.getAttribute("href"));
+  // which dock tab lights up for each section (the box counts as "menu", the gram as "the spot")
+  [["hero", "hero"], ["molten", "molten"], ["menu", "menu"], ["spot", "spot"], ["box", "menu"], ["gram", "spot"], ["visit", "visit"]].forEach(([id, key]) => {
+    const sec = document.getElementById(id);
     if (!sec) return;
-    ScrollTrigger.create({ trigger: sec, start: "top 50%", end: "bottom 50%", onToggle: (st) => a.classList.toggle("is-active", st.isActive) });
+    ScrollTrigger.create({ trigger: sec, start: "top 55%", end: "bottom 55%", onToggle: (st) => st.isActive && setDock(key) });
   });
+  addEventListener("resize", () => { const a = $(".dock a.is-active"); a && setDock(a.dataset.sec); });
 
   /* ---------- split headings ---------- */
   $$(".split").forEach((h) => {
@@ -302,17 +406,22 @@
     walk(h);
   });
 
-  /* ---------- ticker ---------- */
-  const track = $("#ticker");
-  track.innerHTML += track.innerHTML;
-  let tx = 0, boost = 0;
+  /* ---------- crossed tickers (run opposite ways, speed up when you scroll) ---------- */
+  const tracks = $$("[data-ticker]").map((el) => {
+    el.innerHTML += el.innerHTML + el.innerHTML;
+    return { el, dir: +el.dataset.ticker, x: 0 };
+  });
+  let boost = 0;
   gsap.ticker.add(() => {
     const v = lenis ? Math.abs(lenis.velocity) : 0;
     boost += (Math.min(v, 40) - boost) * .08;
-    tx -= (reduced ? 0 : .6) + boost * .35;
-    const w = track.scrollWidth / 2;
-    if (-tx >= w) tx += w;
-    track.style.transform = `translateX(${tx}px)`;
+    tracks.forEach((t) => {
+      const w = t.el.scrollWidth / 3;
+      t.x -= ((reduced ? 0 : .6) + boost * .35) * t.dir;
+      if (t.x <= -w) t.x += w;
+      if (t.x > 0) t.x -= w;
+      t.el.style.transform = `translateX(${t.x}px)`;
+    });
   });
 
   /* ---------- loader → intro ---------- */
@@ -421,6 +530,8 @@
     if (reduced) return;
     const tl = gsap.timeline();
     tl.from(".hero__dumb span", { yPercent: 120, rotate: (i) => (i % 2 ? 25 : -25), opacity: 0, duration: 1, stagger: .08, ease: "back.out(1.6)" })
+      .from(".gang__m .mascot", { y: -120, opacity: 0, duration: .7, stagger: .12, ease: "bounce.out" }, "-=.5")
+      .from("#gangSay", { scale: 0, transformOrigin: "0% 100%", duration: .5, ease: "back.out(2.4)" }, "-=.2")
       .from(".hero__sub", { y: 20, opacity: 0, duration: .6 }, "-=.6")
       .from(".hero .reveal-up", { y: 26, opacity: 0, duration: .7, stagger: .1, ease: "power3.out" }, "-=.5")
       .from(".hcard", { y: () => innerHeight * .7, rotation: (i) => (i % 2 ? 30 : -30), opacity: 0, duration: .9, stagger: .11, ease: "back.out(1.3)" }, .15)
@@ -442,7 +553,7 @@
   });
 
   // generic fade-ups outside the hero
-  $$(".molten__lede, .drop-card, .stat, .scoop, .menu__aside, .gram__head .btn, .visit__card, .disco__lede, .spot__intro p").forEach((el) => {
+  $$(".molten__lede, .drop-card, .stat, .scoop, .menu__aside, .gram__head .btn, .visit__card, .box__lede, .box__aside, .box__receipt, .spot__intro p").forEach((el) => {
     gsap.from(el, { y: 40, opacity: 0, duration: .9, ease: "power3.out", scrollTrigger: { trigger: el, start: "top 90%" } });
   });
 
@@ -484,8 +595,9 @@
     gsap.from(".pcard", { y: 60, opacity: 0, duration: .8, stagger: .08, scrollTrigger: { trigger: ".spot__track", start: "top 85%" } });
   });
 
-  // disco sign flicker in
-  gsap.from(".sign", { scale: .6, rotate: -12, opacity: 0, duration: 1, ease: "elastic.out(1, .5)", scrollTrigger: { trigger: ".disco", start: "top 40%" } });
+  // box: cookies roll in, box drops onto the table
+  gsap.from("#picker li", { y: 50, rotation: (i) => (i % 2 ? 12 : -12), opacity: 0, duration: .6, stagger: .06, ease: "back.out(1.8)", scrollTrigger: { trigger: ".picker", start: "top 88%" } });
+  gsap.from(".dbox", { y: -120, rotation: 6, opacity: 0, duration: 1, ease: "bounce.out", scrollTrigger: { trigger: ".dbox", start: "top 85%" } });
 
   // gram posts drop in staggered
   gsap.from(".gpost", { y: 80, opacity: 0, rotate: (i) => (i % 2 ? 4 : -4), duration: .9, stagger: .07, ease: "power3.out", scrollTrigger: { trigger: ".gram__grid", start: "top 85%" } });

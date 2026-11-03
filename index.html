@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>DUMB — desserts &amp; coffee, Surat</title>
   <meta name="description" content="Your local cookie dealer. Home of the viral molten cookie. Coffee, shakes, cookies, matcha & desserts in Surat — 2pm to midnight, every day." />
-  <meta name="theme-color" content="#D9262E" />
+  <meta name="theme-color" content="#cc1824" />
   <meta property="og:title" content="DUMB — desserts & coffee" />
   <meta property="og:description" content="life's short, make dumb decisions. the viral molten cookie, 6pm onwards." />
   <meta property="og:image" content="assets/ig/p03.jpg" />
@@ -14,16 +14,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=DM+Serif+Display:ital@0;1&family=Gochi+Hand&family=Space+Mono:wght@400;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/style.css" />
-
-  <script type="importmap">
-    { "imports": {
-        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
-        "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
-    } }
-  </script>
+  <link rel="stylesheet" href="css/style.css?v=10" />
 </head>
 <body>
+  <script src="js/mascots.js?v=10"></script>
 
   <!-- ====== loader ====== -->
   <div class="loader" id="loader" aria-hidden="true">
@@ -52,24 +46,22 @@
       <img src="assets/ig/logo.jpg" alt="" width="44" height="44" />
       <span class="bubble">DUMB</span>
     </a>
-    <nav class="nav__links" aria-label="Main">
-      <a href="#molten">the cookie</a>
-      <a href="#menu">menu</a>
-      <a href="#spot">the spot</a>
-      <a href="#visit">visit</a>
-    </nav>
+    <p class="nav__tag hand">your local cookie dealer</p>
     <div class="nav__status mono" id="status"><i></i><span>checking…</span></div>
-    <button class="nav__burger" id="burger" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
   </header>
 
-  <div class="drawer" id="drawer" aria-hidden="true">
-    <a href="#molten">the cookie</a>
-    <a href="#menu">menu</a>
-    <a href="#spot">the spot</a>
-    <a href="#gram">the gram</a>
-    <a href="#visit">visit us</a>
-    <p class="hand">open 2pm – 12am · every day</p>
-  </div>
+  <!-- ====== bottom dock nav ====== -->
+  <nav class="dock" id="dock" aria-label="Main">
+    <span class="dock__blob" id="dockBlob" aria-hidden="true"></span>
+    <a href="#top" data-sec="hero"><span class="dock__ico">🏠</span><b>home</b></a>
+    <a href="#molten" data-sec="molten"><span class="dock__ico">🍪</span><b>cookie</b></a>
+    <a href="#menu" data-sec="menu" class="dock__main" aria-label="menu">
+      <svg class="mascot" aria-hidden="true"><use href="#m-heart" /></svg>
+      <b>menu</b>
+    </a>
+    <a href="#spot" data-sec="spot"><span class="dock__ico">📸</span><b>spot</b></a>
+    <a href="#visit" data-sec="visit"><span class="dock__ico">📍</span><b>visit</b></a>
+  </nav>
 
   <main id="top">
 
@@ -79,6 +71,12 @@
         <p class="sticker sticker--cream hand" data-float>📍 surat · est. oct '26</p>
         <p class="hero__kicker hand reveal-up">your local cookie dealer 🍪</p>
         <h1 class="hero__title">
+          <span class="gang" aria-hidden="true">
+            <button class="gang__m" data-say="0" tabindex="-1"><svg class="mascot"><use href="#m-heart" /></svg></button>
+            <button class="gang__m" data-say="1" tabindex="-1"><svg class="mascot"><use href="#m-yoga" /></svg></button>
+            <button class="gang__m" data-say="2" tabindex="-1"><svg class="mascot"><use href="#m-shy" /></svg></button>
+            <span class="say hand" id="gangSay">hii bestie 👋</span>
+          </span>
           <span class="bubble hero__dumb" aria-label="DUMB">
             <span>D</span><span>U</span><span>M</span><span>B</span>
           </span>
@@ -110,20 +108,38 @@
         <p class="hero__note hand">this is the cookie place<br/>i was telling you about<br/><small>(the queue is worth it)</small></p>
         <p class="hero__hint mono">tap the pile to shuffle</p>
         <span class="sticker sticker--round" data-float style="--r:-12deg">certified<br/><b>DUMB</b></span>
+        <span class="burst burst--gold" data-float style="--r:14deg; right:-2%; bottom:22%"><b>6PM+</b><small>molten</small></span>
+        <span class="label-tape hand" style="--r:-5deg; right:2%; bottom:3%">bad decisions taste better</span>
       </div>
 
+      <i class="spark" style="left:46%; top:16%">✦</i>
+      <i class="spark spark--sm" style="left:6%; top:58%">✸</i>
+      <i class="spark" style="left:52%; bottom:14%">✺</i>
+      <i class="spark spark--sm" style="right:4%; top:12%">✦</i>
+
       <a href="#molten" class="hero__scroll mono" aria-label="scroll down">scroll if u dare ↓</a>
+      <svg class="mascot-peek hero__peek" aria-hidden="true"><use href="#m-peek" /></svg>
     </section>
 
-    <!-- ====== ticker ====== -->
-    <div class="ticker" aria-hidden="true">
-      <div class="ticker__track" id="ticker">
-        <span>life's short, make dumb decisions</span><b>✦</b><span>coffee</span><b>✦</b><span>shakes</span><b>✦</b><span>cookie</span><b>✦</b><span>matcha</span><b>✦</b><span>dessert</span><b>✦</b><span>bad decisions taste better</span><b>✦</b>
+    <!-- ====== crossed tickers ====== -->
+    <div class="tickers" aria-hidden="true">
+      <div class="ticker ticker--b">
+        <div class="ticker__track" data-ticker="1">
+          <span>surat, you literally ate</span><b>✦</b><span>handle with cravings</span><b>✦</b><span>limited slots, limited cookies</span><b>✦</b><span>open till 12am</span><b>✦</b>
+        </div>
+      </div>
+      <div class="ticker">
+        <div class="ticker__track" data-ticker="-1">
+          <span>life's short, make dumb decisions</span><b>✦</b><span>coffee</span><b>✦</b><span>shakes</span><b>✦</b><span>cookie</span><b>✦</b><span>matcha</span><b>✦</b><span>dessert</span><b>✦</b><span>bad decisions taste better</span><b>✦</b>
+        </div>
       </div>
     </div>
 
     <!-- ====== molten ====== -->
     <section class="molten" id="molten">
+      <span class="ghost-word" aria-hidden="true">COOKIE</span>
+      <i class="spark spark--red" style="right:8%; top:9%">✦</i>
+      <i class="spark spark--red spark--sm" style="left:44%; top:46%">✸</i>
       <div class="molten__head">
         <p class="mono label">// the main character</p>
         <h2 class="split">trendy <span class="bubble">MOLTEN</span> little situation</h2>
@@ -136,6 +152,7 @@
             <span class="tape"></span>
             <img src="assets/ig/p03.jpg" alt="The viral molten cookie sitting on vanilla gelato in a red DUMB cup" loading="lazy" />
             <figcaption class="hand">day 1 of the drop. it never stood a chance.</figcaption>
+            <span class="burst" style="--r:-10deg; right:-26px; top:-26px"><b>VIRAL</b><small>1.8k ♥</small></span>
           </div>
           <ul class="anatomy__notes hand">
             <li style="--y:16%" data-side="r"><svg viewBox="0 0 120 30"><path d="M118 15 C 80 2, 40 28, 4 14"/></svg>dark cocoa shell, crackly af</li>
@@ -148,6 +165,10 @@
 
         <div class="molten__info">
           <div class="drop-card">
+            <div class="drop-card__m" aria-hidden="true">
+              <span class="say say--r hand">me at 5:59pm</span>
+              <svg class="mascot"><use href="#m-shy" /></svg>
+            </div>
             <p class="mono label">molten o'clock</p>
             <p class="drop-card__state" id="dropState">loading the vibes…</p>
             <div class="countdown mono" id="countdown" aria-live="polite">
@@ -176,8 +197,15 @@
       </div>
     </section>
 
+    <div class="stripes" aria-hidden="true"></div>
+
     <!-- ====== menu ====== -->
     <section class="menu tiles tiles--soft" id="menu">
+      <span class="ghost-word ghost-word--cream" aria-hidden="true">MENU</span>
+      <i class="spark" style="left:7%; top:12%">✦</i>
+      <i class="spark spark--sm" style="right:9%; top:30%">✺</i>
+      <i class="spark" style="left:10%; bottom:24%">✸</i>
+      <span class="burst burst--gold" data-float style="--r:-12deg; right:7%; top:13%"><b>NEW</b><small>matcha</small></span>
       <div class="menu__head">
         <p class="mono label label--cream">// order up</p>
         <h2 class="split">pick your <span class="bubble">poison</span></h2>
@@ -185,6 +213,7 @@
       </div>
 
       <div class="check" id="check">
+        <svg class="mascot-peek check__peek" aria-hidden="true"><use href="#m-peek" /></svg>
         <div class="check__top">
           <h3 class="check__title">Guest Check <img src="assets/ig/logo.jpg" alt="" /></h3>
           <div class="check__meta mono">
@@ -205,6 +234,7 @@
 
       <div class="decide" id="decide">
         <div class="decide__copy">
+          <svg class="mascot decide__m" aria-hidden="true"><use href="#m-yoga" /></svg>
           <h3 class="bubble">can't decide?</h3>
           <p class="hand">let the cookie gods choose. no refunds on destiny.</p>
         </div>
@@ -223,6 +253,10 @@
           <h2 class="split">red tiles, <br/>bad <span class="bubble">ideas</span></h2>
           <p>we built a whole tiny red world for you to sit in, take 47 photos in, and eat cookies in. swipe the tour →</p>
           <p class="hand">(the asmr dumb tour is on our gram btw)</p>
+          <div class="spot__m" aria-hidden="true">
+            <svg class="mascot"><use href="#m-wave" /></svg>
+            <span class="say hand">come say hi!!</span>
+          </div>
         </div>
         <div class="spot__track" id="spotTrack">
           <article class="pcard" style="--r:-4deg"><span class="tape"></span><img src="assets/ig/p08.jpg" alt="Red metal stools against a red and white striped counter" loading="lazy" /><p class="hand">red stools. sit, spin, regret nothing.</p></article>
@@ -236,15 +270,43 @@
       </div>
     </section>
 
-    <!-- ====== disco ====== -->
-    <section class="disco" id="disco">
-      <div class="disco__room" aria-hidden="true">
-        <div class="disco__floor"></div>
+    <!-- ====== pack a dumb box ====== -->
+    <section class="box" id="box">
+      <span class="ghost-word ghost-word--box" aria-hidden="true">BOX</span>
+      <i class="spark" style="left:5%; top:10%">✦</i>
+      <i class="spark spark--sm" style="right:6%; top:8%">✸</i>
+      <i class="spark spark--sm" style="left:48%; bottom:8%">✺</i>
+
+      <div class="box__copy">
+        <p class="mono label label--gold">// build-a-box</p>
+        <h2 class="split">pack a <span class="bubble">dumb</span> box</h2>
+        <p class="box__lede">pick 4 cookies. tap to drop them in, tap the box to take one out. we'll pretend it's for sharing.</p>
+        <ul class="picker" id="picker" aria-label="Cookies you can add"></ul>
+        <p class="hand box__aside">psst. the molten one only ships after 6pm (it's a diva)</p>
       </div>
-      <canvas id="discoCanvas" aria-hidden="true"></canvas>
-      <div class="disco__copy">
-        <p class="sign hand">Let's<br/>Get<br/>DUMB</p>
-        <p class="disco__lede">open till midnight, every single night. bring the group chat, bring the situationship, bring your mom. we don't judge (we do a little).</p>
+
+      <div class="box__stage">
+        <div class="dbox" id="dbox">
+          <div class="dbox__lid" aria-hidden="true"><span class="bubble">DUMB</span><small class="hand">life's short, make dumb decisions</small></div>
+          <div class="dbox__tray">
+            <div class="dbox__grid" id="boxSlots" aria-live="polite"></div>
+          </div>
+          <span class="dbox__stamp hand" aria-hidden="true">packed!<small>bestie-approved</small></span>
+          <div class="dbox__front" aria-hidden="true"><span class="hand">handle with cravings</span></div>
+          <div class="dbox__m" aria-hidden="true">
+            <span class="say say--r hand" id="boxSay">is that for me?</span>
+            <svg class="mascot-peek"><use href="#m-peek" /></svg>
+          </div>
+        </div>
+
+        <div class="box__receipt mono">
+          <div class="box__line"><span id="boxCount">0/4 cookies</span><b id="boxTotal">₹0</b></div>
+          <div class="box__btns">
+            <button class="btn btn--ghost" id="boxRandom" type="button">surprise me 🎲</button>
+            <button class="btn btn--cream" id="boxSend" type="button" disabled>dm this box ↗</button>
+          </div>
+          <p class="box__note">copies your order + opens our insta DMs. paste, send, done.</p>
+        </div>
       </div>
     </section>
 
@@ -253,7 +315,13 @@
       <div class="gram__head">
         <p class="mono label">// straight from the gram</p>
         <h2 class="split">we post <span class="bubble">cookies</span> and chaos</h2>
-        <a class="btn btn--red" href="https://www.instagram.com/getdumbbbb/" target="_blank" rel="noopener">@getdumbbbb ↗</a>
+        <div class="gram__cta">
+          <div class="gram__m" aria-hidden="true">
+            <span class="say hand">follow or we cry</span>
+            <svg class="mascot"><use href="#m-heart" /></svg>
+          </div>
+          <a class="btn btn--red" href="https://www.instagram.com/getdumbbbb/" target="_blank" rel="noopener">@getdumbbbb ↗</a>
+        </div>
       </div>
       <div class="gram__grid" id="gramGrid"></div>
     </section>
@@ -277,8 +345,12 @@
       <div class="visit__mirror" aria-hidden="true">
         <div class="mirror"><img src="assets/ig/p09.jpg" alt="" loading="lazy" /></div>
         <p class="hand">↑ this guy. find him.</p>
+        <svg class="mascot visit__m"><use href="#m-shy" /></svg>
+        <span class="burst burst--gold" style="--r:12deg; right:4%; top:-4%"><b>2–12</b><small>every day</small></span>
       </div>
     </section>
+
+    <div class="stripes stripes--ink" aria-hidden="true"></div>
   </main>
 
   <!-- ====== footer ====== -->
@@ -293,7 +365,14 @@
         <a href="#top">back to top ↑</a>
       </div>
     </div>
-    <p class="foot__giant bubble" aria-hidden="true">DUMB</p>
+    <div class="foot__stage" aria-hidden="true">
+      <div class="foot__gang">
+        <svg class="mascot"><use href="#m-heart" /></svg>
+        <svg class="mascot"><use href="#m-yoga" /></svg>
+        <svg class="mascot"><use href="#m-shy" /></svg>
+      </div>
+      <p class="foot__giant bubble">DUMB</p>
+    </div>
     <div class="foot__base mono">
       <span>© 2026 dumb desserts, surat</span>
       <span>this site uses zero browser cookies. only real ones.</span>
@@ -304,8 +383,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
-  <script src="js/data.js"></script>
-  <script src="js/main.js"></script>
-  <script type="module" src="js/scenes.js"></script>
+  <script src="js/data.js?v=10"></script>
+  <script src="js/main.js?v=10"></script>
 </body>
 </html>

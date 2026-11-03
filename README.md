@@ -16,7 +16,8 @@ then open http://localhost:5173. (Double-clicking `index.html` mostly works too,
 - `css/style.css`: brand colours live at the top in `:root`
 - `js/data.js`: **edit this one**: menu, prices, hours, the instagram posts
 - `js/main.js`: loader, scroll animations, menu tabs, slot machine, live open/closed + molten countdown (IST)
-- `js/scenes.js`: the 3D disco ball in the "let's get dumb" section (three.js, generated in code, no model files)
+- `js/mascots.js`: the dumb gang (heart, yoga, shy, peek, wave) redrawn from their logo as an inline SVG sprite. use one with `<svg class="mascot"><use href="#m-heart"/></svg>`, colour comes from CSS `color`
+- "pack a dumb box" section: markup in `index.html` (`#box`), cookie looks + logic in `js/main.js` (`looks`), cookies come from `js/data.js`
 - hero photo pile: markup in `index.html` (`#heroPile`), shuffle + mouse lean in `js/main.js`
 - `assets/ig/`: photos pulled from their instagram
 
